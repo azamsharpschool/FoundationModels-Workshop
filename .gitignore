@@ -50,3 +50,4 @@ GoogleService-Info.plist
 # Temporary files
 *.swp
 *.tmp
+Recipe App/.DS_Store
