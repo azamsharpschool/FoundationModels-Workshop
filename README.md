@@ -34,9 +34,8 @@ To get the most from this workshop, you should have:
 
 ### Recipe App 
 
-- [Starter Project]() 
+- [Starter Project](/Recipe%20App/Starter%20Code/RecipeApp.zip) 
 - [Final Project](/Recipe%20App/Completed%20Code/RecipeApp.zip)
-
 
 ### Health Insights App 
 
