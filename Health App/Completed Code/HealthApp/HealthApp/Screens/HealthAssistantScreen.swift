@@ -6,8 +6,7 @@ struct HealthAssistantScreen: View {
     @Environment(\.healthKitClient) private var healthKitClient
     @Environment(HealthAssistantEngine.self) private var healthAssistantEngine
 
-    @State private var prompt = "How many calories burned?"
-    @State private var healthSummary: HealthSummary?
+    @State private var prompt = "How many calories burned in last 3 days?"
     @State private var isLoading: Bool = false
 
     var body: some View {
@@ -20,7 +19,7 @@ struct HealthAssistantScreen: View {
                    Text(response.text ?? "")
                        .frame(maxWidth: .infinity, alignment: .leading)
                 
-                if let gyms = response.gyms, !gyms.isEmpty {
+                if !isLoading, let gyms = response.gyms, !gyms.isEmpty {
                     GymMapView(gyms: gyms)
                 }
             }
@@ -39,13 +38,13 @@ struct HealthAssistantScreen: View {
                 TextField("Enter prompt", text: $prompt)
                 
                 Button("Submit") {
+                    
                     Task {
                         do {
+                            print("asking the assistant")
                             isLoading = true
-                            let summary = try await healthKitClient.summary()
                             try await healthAssistantEngine.askHealthAssistant(
-                                prompt,
-                                summary: summary
+                                prompt
                             )
                             
                             isLoading = false

@@ -42,10 +42,9 @@ struct HealthAssistantScreen: View {
                     Task {
                         do {
                             isLoading = true
-                            let summary = try await healthKitClient.summary()
+                            //let summary = try await healthKitClient.summary()
                             try await healthAssistantEngine.askHealthAssistant(
-                                prompt,
-                                summary: summary
+                                prompt
                             )
                             
                             isLoading = false

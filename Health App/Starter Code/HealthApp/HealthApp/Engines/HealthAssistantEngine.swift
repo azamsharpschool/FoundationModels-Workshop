@@ -30,8 +30,9 @@ class HealthAssistantEngine {
         self.session = session
     }
     
-    func askHealthAssistant(_ question: String, summary: HealthSummary) async throws {
+    func askHealthAssistant(_ question: String) async throws {
         
+        /*
         responseText = ""
 
         let prompt = """
@@ -45,9 +46,9 @@ class HealthAssistantEngine {
 
         User question:
         \(question)
-        """
+        """ */
 
-        let stream = session.streamResponse(to: prompt, generating: HealthAssistantResponse.self)
+        let stream = session.streamResponse(to: question, generating: HealthAssistantResponse.self)
 
         for try await partialResponse in stream {
             response = partialResponse.content

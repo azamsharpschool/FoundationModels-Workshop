@@ -15,7 +15,7 @@ struct HealthAssistantResponse {
     @Guide(description: "A helpful natural language response that answers the user's question.")
     let text: String
 
-    @Guide(description: "A list of nearby gyms or fitness centers. Populate this only if the user asked for nearby gyms or workout locations. Otherwise, return an empty array.")
+    @Guide(description: "A list of nearby gyms. If the user did not explicitly ask for gyms, you MUST return empty array for this field.")
     let gyms: [Gym]
 }
 
@@ -23,30 +23,21 @@ struct HealthAssistantResponse {
 class HealthAssistantEngine {
     
     let session: LanguageModelSession
-    var responseText = ""
     var response: HealthAssistantResponse.PartiallyGenerated?
     
     init(session: LanguageModelSession) {
         self.session = session
     }
     
-    func askHealthAssistant(_ question: String, summary: HealthSummary) async throws {
+    func askHealthAssistant(_ question: String) async throws {
         
-        responseText = ""
-
+        response = nil 
+        
         let prompt = """
-        Answer the user's health question using this health summary.
-
-        Health summary for the last \(summary.days) days:
-        - Average steps: \(summary.averageSteps)
-        - Average sleep: \(summary.averageSleep) hours
-        - Average active calories: \(summary.averageActiveCalories)
-        - Workouts: \(summary.workouts)
-
         User question:
         \(question)
         """
-
+        
         let stream = session.streamResponse(to: prompt, generating: HealthAssistantResponse.self)
 
         for try await partialResponse in stream {
