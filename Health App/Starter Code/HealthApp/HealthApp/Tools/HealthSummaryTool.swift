@@ -8,5 +8,6 @@
 import Foundation
 import FoundationModels
 
-
-// HealthTool 
+struct HealthSummaryTool {
+    // TODO
+}
